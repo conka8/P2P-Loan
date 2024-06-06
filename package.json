@@ -1,22 +1,25 @@
 {
-  "name": "solidity-workshop",
+  "name": "p2p-lending",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "mocha",
-    "compile": "node compile.js",
-    "deploy": "node deploy.js"
+  "description": "This repository hosts a variety of smart contracts for a DAO (Decentralized Autonomous Organisation) focussing on delivering a decentralized p2p-lending platform on the Ethereum Blockchain. This may very well develop into something completely different based on the direction taken by the DAO in the future. We are as excited as you are! ;-)",
+  "directories": {
+    "test": "test"
   },
-  "keywords": [],
+  "dependencies": {
+    "web3": "^1.0.0-beta.37"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adorsys/p2p-lending.git"
+  },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "ganache-cli": "^6.1.6",
-    "mocha": "^5.2.0",
-    "openzeppelin-solidity": "^1.11.0",
-    "solc": "^0.4.24",
-    "truffle-hdwallet-provider": "0.0.6",
-    "web3": "^1.0.0-beta.35"
-  }
+  "bugs": {
+    "url": "https://github.com/adorsys/p2p-lending/issues"
+  },
+  "homepage": "https://github.com/adorsys/p2p-lending#readme"
 }
