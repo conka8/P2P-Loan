@@ -1,28 +1,69 @@
 <template>
   <div class="home">
-    <h1>Home</h1>
-    <h3>Current Contract Fee: {{ contractFee }} WEI</h3>
-    <p>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi ad quod
-      numquam corrupti vero similique facilis iure repellendus nihil cumque nemo
-      a nulla, quisquam soluta debitis aspernatur temporibus aperiam
-      perspiciatis?
-    </p>
-    <button @click="init">Test</button>
+    <div class="title">Lending Requests</div>
+    <hr class="separator">
+    <hr class="separator">
+    <OpenRequests @openRequestOverlay="openRequestCreation" :contract="requestManagementContract">
+      <transition>
+        <CreateRequest
+          v-if="createRequest"
+          @closeRequestOverlay="closeRequestCreation"
+          :contract="requestManagementContract"
+        />
+      </transition>
+    </OpenRequests>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import OpenRequests from '@/components/RequestManagement/LendingRequests/openLendingRequests'
+import CreateRequest from '../components/RequestManagement/CreateLendingRequest/createLendingRequest'
+// import { requestManagementHelper } from '@/services/web3/requestManagement/initializeRmContract'
+
 export default {
-  computed: mapState({
-    contractFee: state => state.contractFee
-  }),
-  components: {},
-  methods: {
-    async init() {
-      console.log(this.$store.state.contractFee)
+  components: {
+    OpenRequests,
+    CreateRequest
+  },
+  data() {
+    return {
+      requestManagementContract: null,
+      web3: null,
+      createRequest: false
     }
+  },
+  methods: {
+    openRequestCreation() {
+      this.createRequest = true
+    },
+    closeRequestCreation() {
+      this.createRequest = false
+    }
+  },
+  async mounted() {
+    // const initialize = await requestManagementHelper()
+    // this.requestManagementContract = initialize.contract
+    // this.web3 = initialize.web3
   }
 }
 </script>
+
+
+<style lang="scss">
+.v-enter-active {
+  transition: opacity 0.2s ease-in;
+}
+
+.v-leave-active {
+  transition: opacity 0.3s ease-out;
+}
+
+.v-enter,
+.v-leave-to {
+  opacity: 0;
+}
+
+.home {
+  text-align: center;
+}
+</style>
