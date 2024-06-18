@@ -1,16 +1,23 @@
-$navbar-hover-color: #f3f3f3;
-$navbar-height: 44px;
+// size(s)
+$navbar-height: 100px;
+$content-height: calc(100vh - 152px);
+$piechart-size: 156px;
 
-$sidebar-width: 200px;
+// color(s)
+$primary-text-color: #292929;
 
-$background-color: #dadada;
-$background-color-inactive: #e7e7e7;
+$card-shadow: rgba(225, 225, 225, 0.5);
 
-$padding-standard: 10px;
-$margin-standard: 10px;
+$bg-body: #fafafa;
+$bg-white: #ffffff;
+$bg-blue: #3b82ba;
+$bg-active: #92e76d;
+$bg-gray: #bababa;
 
-$border-color: #a0a0a0;
-$border-width: 2px;
+$piechart-fill-color: #3b82ba;
+$piechart-empty-color: #f0f0f0;
 
-$link-text-color: #666;
-$link-text-color-darkened: #444;
+$status-blue: #0984bf;
+$status-gray: #ebebeb;
+
+$status-text: #2c2e2f;

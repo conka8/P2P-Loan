@@ -1,53 +1,78 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-
-import store from './store/'
+import store from './state'
 
 Vue.use(Router)
 
-export default new Router({
-    mode: 'history',
-    base: process.env.BASE_URL,
-    routes: [
+const router = new Router({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: Home,
+    },
+    {
+      path: '/ico',
+      name: 'ico',
+      component: () => import(/* webpackChunkName: "ICO" */ './views/ICO.vue'),
+      children: [
         {
-            path: '/',
-            name: 'home',
-            component: Home
+          path: 'memberArea',
+          name: 'memberArea',
+          component: () =>
+            import(
+              /* webpackChunkName: "memberArea" */ './components/ProposalManagement/MemberControl'
+            ),
+        },
+      ],
+    },
+    {
+      path: '/requests',
+      name: 'requests',
+      component: () =>
+        import(/* webpackChunkName: "Requests" */ './views/Requests.vue'),
+      children: [
+        {
+          path: 'allRequests',
+          name: 'allRequests',
+          component: () =>
+            import(
+              /* webpackChunkName: "AllRequests" */ './components/RequestManagement/AllRequests/AllRequests'
+            ),
         },
         {
-            path: '/about',
-            name: 'about',
-            // route level code-splitting
-            // this generates a separate chunk (about.[hash].js) for this route
-            // which is lazy-loaded when the route is visited.
-            component: () =>
-                import(/* webpackChunkName: "about" */ './views/About.vue')
+          path: 'userRequests',
+          name: 'userRequests',
+          component: () =>
+            import(
+              /* webpackChunkName: "UserRequests" */ './components/RequestManagement/UserRequests/UserRequests'
+            ),
         },
-        {
-            path: '/lendingboard',
-            name: 'lendingboard',
-            component: () =>
-                import(/* webpackChunkName: "lendingBoard" */ './views/LendingBoard.vue'),
-            beforeEnter: (to, from, next) => {
-                if (store.state.authenticated) {
-                    next()
-                } else {
-                    next({ name: 'home' })
-                }
-            }
-        },
-        {
-            path: '/ico',
-            name: 'ico',
-            component: () =>
-                import(/* webpackChunkName: "ICO" */ './views/ICO.vue')
-        },
-        {
-            path: '/userrequests',
-            name: 'userrequests',
-            component: () =>
-                import(/* webpackChunkName: "userRequests" */ './views/UserRequests.vue')
+      ],
+      beforeEnter(to, from, next) {
+        if (to.path === '/requests') {
+          next({ name: 'allRequests' })
+        } else {
+          next()
         }
-    ]
+      },
+    },
+  ],
 })
+
+router.beforeEach((to, from, next) => {
+  if (store.state.ico.active) {
+    if (to.path === '/' || to.path === '/ico') {
+      next()
+    } else {
+      next({ name: 'home' })
+    }
+  } else {
+    next()
+  }
+})
+
+export default router

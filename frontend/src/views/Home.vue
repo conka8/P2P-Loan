@@ -1,76 +1,27 @@
 <template>
   <div class="home">
-    <div class="title">Lending Requests</div>
-    <hr class="separator">
-    <hr class="separator">
-    <OpenRequests @openRequestOverlay="openRequestCreation" :contract="requestManagementContract">
-      <transition>
-        <CreateRequest
-          v-if="createRequest"
-          @closeRequestOverlay="closeRequestCreation"
-          :contract="requestManagementContract"
-        />
-      </transition>
-    </OpenRequests>
+    <LandingPage />
   </div>
 </template>
 
 <script>
-import OpenRequests from '@/components/RequestManagement/LendingRequests/openLendingRequests'
-import CreateRequest from '../components/RequestManagement/CreateLendingRequest/createLendingRequest'
-
-import { mapState } from 'vuex'
-import { UPDATE_REQUESTS } from '@/util/constants/types'
+import LandingPage from '../components/LandingPage/LandingPage'
 
 export default {
-  computed: mapState({
-    requestManagementContract: state => state.requestManagementInstance
-  }),
+  name: 'home',
   components: {
-    OpenRequests,
-    CreateRequest
+    LandingPage,
   },
-  data() {
-    return {
-      createRequest: false
-    }
-  },
-  methods: {
-    openRequestCreation() {
-      this.createRequest = true
-    },
-    closeRequestCreation() {
-      this.createRequest = false
-    }
-  },
-  watch: {
-    requestManagementContract: {
-      handler: function(contractInstance) {
-        if (contractInstance !== null && contractInstance !== undefined) {
-          this.$store.dispatch(UPDATE_REQUESTS, contractInstance)
-        }
-      }
-    }
-  }
 }
 </script>
 
-
 <style lang="scss">
-.v-enter-active {
-  transition: opacity 0.2s ease-in;
-}
-
-.v-leave-active {
-  transition: opacity 0.3s ease-out;
-}
-
-.v-enter,
-.v-leave-to {
-  opacity: 0;
-}
+@import '../util/scss/variables';
 
 .home {
-  text-align: center;
+  min-height: $content-height;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
